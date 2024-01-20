@@ -1,0 +1,657 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="Kod_customer" />
+          </Key>
+          <Property Name="Kod_customer" Type="int" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Otchestvo" Type="varchar" MaxLength="100" />
+          <Property Name="Adress" Type="varchar(max)" />
+          <Property Name="Mobile phone" Type="varchar" MaxLength="15" />
+          <Property Name="id_user" Type="int" />
+        </EntityType>
+        <EntityType Name="Dolzhnost">
+          <Key>
+            <PropertyRef Name="Kod_dolzhnost" />
+          </Key>
+          <Property Name="Kod_dolzhnost" Type="int" Nullable="false" />
+          <Property Name="Nazvanie dolzhnost" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="kod_inventory" />
+          </Key>
+          <Property Name="kod_inventory" Type="int" Nullable="false" />
+          <Property Name="kod_sewing_tools" Type="int" Nullable="false" />
+          <Property Name="kod_materials" Type="int" Nullable="false" />
+          <Property Name="kod_sewing_accessories" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Materials">
+          <Key>
+            <PropertyRef Name="kod_materials" />
+          </Key>
+          <Property Name="kod_materials" Type="int" Nullable="false" />
+          <Property Name="Name materials" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="kod" />
+          </Key>
+          <Property Name="kod" Type="int" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="50" />
+          <Property Name="kod_product" Type="int" Nullable="false" />
+          <Property Name="Kod_customer" Type="int" Nullable="false" />
+          <Property Name="Order data" Type="date" />
+          <Property Name="Order" Type="varchar" MaxLength="100" />
+          <Property Name="Description" Type="text" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <EntityType Name="Product list">
+          <Key>
+            <PropertyRef Name="kod_product" />
+          </Key>
+          <Property Name="kod_product" Type="int" Nullable="false" />
+          <Property Name="Nazvanie tovara" Type="varchar" MaxLength="50" />
+          <Property Name="Price" Type="money" />
+        </EntityType>
+        <EntityType Name="Sewing_accessories">
+          <Key>
+            <PropertyRef Name="kod_sewing_accessories" />
+          </Key>
+          <Property Name="kod_sewing_accessories" Type="int" Nullable="false" />
+          <Property Name="Name_accessory" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="Sewing_tools">
+          <Key>
+            <PropertyRef Name="kod_sewing_tools" />
+          </Key>
+          <Property Name="kod_sewing_tools" Type="int" Nullable="false" />
+          <Property Name="Name_sewing_tool" Type="varchar" MaxLength="50" />
+          <Property Name="Quantity" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="login" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="kod_worker" />
+          </Key>
+          <Property Name="kod_worker" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Kod_dolzhnost" Type="int" />
+          <Property Name="Surname" Type="varchar" MaxLength="100" />
+          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="Otchestvo" Type="varchar" MaxLength="100" />
+          <Property Name="id_user" Type="int" />
+        </EntityType>
+        <Association Name="FK_Customers_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_Materials">
+          <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materials">
+              <PropertyRef Name="kod_materials" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="kod_materials" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_Sewing_accessories">
+          <End Role="Sewing_accessories" Type="Self.Sewing_accessories" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sewing_accessories">
+              <PropertyRef Name="kod_sewing_accessories" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="kod_sewing_accessories" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_Sewing_tools">
+          <End Role="Sewing_tools" Type="Self.Sewing_tools" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sewing_tools">
+              <PropertyRef Name="kod_sewing_tools" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="kod_sewing_tools" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Kod_customer" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Kod_customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Product list">
+          <End Role="Product list" Type="Self.Product list" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product list">
+              <PropertyRef Name="kod_product" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="kod_product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workers_Dolzhnost">
+          <End Role="Dolzhnost" Type="Self.Dolzhnost" Multiplicity="0..1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dolzhnost">
+              <PropertyRef Name="Kod_dolzhnost" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="Kod_dolzhnost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workers_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ModelContainer">
+          <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Dolzhnost" EntityType="Self.Dolzhnost" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product list" EntityType="Self.Product list" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sewing_accessories" EntityType="Self.Sewing_accessories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sewing_tools" EntityType="Self.Sewing_tools" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Workers" EntityType="Self.Workers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Customers_User" Association="Self.FK_Customers_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_Materials" Association="Self.FK_Inventory_Materials">
+            <End Role="Materials" EntitySet="Materials" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_Sewing_accessories" Association="Self.FK_Inventory_Sewing_accessories">
+            <End Role="Sewing_accessories" EntitySet="Sewing_accessories" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_Sewing_tools" Association="Self.FK_Inventory_Sewing_tools">
+            <End Role="Sewing_tools" EntitySet="Sewing_tools" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Product list" Association="Self.FK_Orders_Product list">
+            <End Role="Product list" EntitySet="Product list" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workers_Dolzhnost" Association="Self.FK_Workers_Dolzhnost">
+            <End Role="Dolzhnost" EntitySet="Dolzhnost" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workers_User" Association="Self.FK_Workers_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Customers">
+          <Key>
+            <PropertyRef Name="Kod_customer" />
+          </Key>
+          <Property Name="Kod_customer" Type="Int32" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Otchestvo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Adress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile_phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="id_user" Type="Int32" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Customers_User" FromRole="Customers" ToRole="User" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Customers" FromRole="Customers" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Dolzhnost">
+          <Key>
+            <PropertyRef Name="Kod_dolzhnost" />
+          </Key>
+          <Property Name="Kod_dolzhnost" Type="Int32" Nullable="false" />
+          <Property Name="Nazvanie_dolzhnost" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Workers" Relationship="Self.FK_Workers_Dolzhnost" FromRole="Dolzhnost" ToRole="Workers" />
+        </EntityType>
+        <EntityType Name="Inventory">
+          <Key>
+            <PropertyRef Name="kod_inventory" />
+          </Key>
+          <Property Name="kod_inventory" Type="Int32" Nullable="false" />
+          <Property Name="kod_sewing_tools" Type="Int32" Nullable="false" />
+          <Property Name="kod_materials" Type="Int32" Nullable="false" />
+          <Property Name="kod_sewing_accessories" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Materials" Relationship="Self.FK_Inventory_Materials" FromRole="Inventory" ToRole="Materials" />
+          <NavigationProperty Name="Sewing_accessories" Relationship="Self.FK_Inventory_Sewing_accessories" FromRole="Inventory" ToRole="Sewing_accessories" />
+          <NavigationProperty Name="Sewing_tools" Relationship="Self.FK_Inventory_Sewing_tools" FromRole="Inventory" ToRole="Sewing_tools" />
+        </EntityType>
+        <EntityType Name="Materials">
+          <Key>
+            <PropertyRef Name="kod_materials" />
+          </Key>
+          <Property Name="kod_materials" Type="Int32" Nullable="false" />
+          <Property Name="Name_materials" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="Inventory" Relationship="Self.FK_Inventory_Materials" FromRole="Materials" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="kod" />
+          </Key>
+          <Property Name="kod" Type="Int32" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="kod_product" Type="Int32" Nullable="false" />
+          <Property Name="Kod_customer" Type="Int32" Nullable="false" />
+          <Property Name="Order_data" Type="DateTime" Precision="0" />
+          <Property Name="Order" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
+          <NavigationProperty Name="Product_list" Relationship="Self.FK_Orders_Product_list" FromRole="Orders" ToRole="Product_list" />
+        </EntityType>
+        <EntityType Name="Product_list">
+          <Key>
+            <PropertyRef Name="kod_product" />
+          </Key>
+          <Property Name="kod_product" Type="Int32" Nullable="false" />
+          <Property Name="Nazvanie_tovara" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Product_list" FromRole="Product_list" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Sewing_accessories">
+          <Key>
+            <PropertyRef Name="kod_sewing_accessories" />
+          </Key>
+          <Property Name="kod_sewing_accessories" Type="Int32" Nullable="false" />
+          <Property Name="Name_accessory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="Inventory" Relationship="Self.FK_Inventory_Sewing_accessories" FromRole="Sewing_accessories" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="Sewing_tools">
+          <Key>
+            <PropertyRef Name="kod_sewing_tools" />
+          </Key>
+          <Property Name="kod_sewing_tools" Type="Int32" Nullable="false" />
+          <Property Name="Name_sewing_tool" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <NavigationProperty Name="Inventory" Relationship="Self.FK_Inventory_Sewing_tools" FromRole="Sewing_tools" ToRole="Inventory" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id_user" />
+          </Key>
+          <Property Name="id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customers" Relationship="Self.FK_Customers_User" FromRole="User" ToRole="Customers" />
+          <NavigationProperty Name="Workers" Relationship="Self.FK_Workers_User" FromRole="User" ToRole="Workers" />
+        </EntityType>
+        <EntityType Name="Workers">
+          <Key>
+            <PropertyRef Name="kod_worker" />
+          </Key>
+          <Property Name="kod_worker" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Kod_dolzhnost" Type="Int32" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Otchestvo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="id_user" Type="Int32" />
+          <NavigationProperty Name="Dolzhnost" Relationship="Self.FK_Workers_Dolzhnost" FromRole="Workers" ToRole="Dolzhnost" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Workers_User" FromRole="Workers" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Customers_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Customers" Type="Self.Customers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Customers">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="Kod_customer" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Kod_customer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workers_Dolzhnost">
+          <End Role="Dolzhnost" Type="Self.Dolzhnost" Multiplicity="0..1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dolzhnost">
+              <PropertyRef Name="Kod_dolzhnost" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="Kod_dolzhnost" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_Materials">
+          <End Role="Materials" Type="Self.Materials" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Materials">
+              <PropertyRef Name="kod_materials" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="kod_materials" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_Sewing_accessories">
+          <End Role="Sewing_accessories" Type="Self.Sewing_accessories" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sewing_accessories">
+              <PropertyRef Name="kod_sewing_accessories" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="kod_sewing_accessories" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Inventory_Sewing_tools">
+          <End Role="Sewing_tools" Type="Self.Sewing_tools" Multiplicity="1" />
+          <End Role="Inventory" Type="Self.Inventory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sewing_tools">
+              <PropertyRef Name="kod_sewing_tools" />
+            </Principal>
+            <Dependent Role="Inventory">
+              <PropertyRef Name="kod_sewing_tools" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Product_list">
+          <End Role="Product_list" Type="Self.Product_list" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product_list">
+              <PropertyRef Name="kod_product" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="kod_product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Workers_User">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id_user" />
+            </Principal>
+            <Dependent Role="Workers">
+              <PropertyRef Name="id_user" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AtelieEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Customers" EntityType="Self.Customers" />
+          <EntitySet Name="Dolzhnost" EntityType="Self.Dolzhnost" />
+          <EntitySet Name="Inventory" EntityType="Self.Inventory" />
+          <EntitySet Name="Materials" EntityType="Self.Materials" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="Product_list" EntityType="Self.Product_list" />
+          <EntitySet Name="Sewing_accessories" EntityType="Self.Sewing_accessories" />
+          <EntitySet Name="Sewing_tools" EntityType="Self.Sewing_tools" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="Workers" EntityType="Self.Workers" />
+          <AssociationSet Name="FK_Customers_User" Association="Self.FK_Customers_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Customers" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workers_Dolzhnost" Association="Self.FK_Workers_Dolzhnost">
+            <End Role="Dolzhnost" EntitySet="Dolzhnost" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_Materials" Association="Self.FK_Inventory_Materials">
+            <End Role="Materials" EntitySet="Materials" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_Sewing_accessories" Association="Self.FK_Inventory_Sewing_accessories">
+            <End Role="Sewing_accessories" EntitySet="Sewing_accessories" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Inventory_Sewing_tools" Association="Self.FK_Inventory_Sewing_tools">
+            <End Role="Sewing_tools" EntitySet="Sewing_tools" />
+            <End Role="Inventory" EntitySet="Inventory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Product_list" Association="Self.FK_Orders_Product_list">
+            <End Role="Product_list" EntitySet="Product_list" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Workers_User" Association="Self.FK_Workers_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Workers" EntitySet="Workers" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="AtelieEntities">
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="Model.Customers">
+              <MappingFragment StoreEntitySet="Customers">
+                <ScalarProperty Name="Kod_customer" ColumnName="Kod_customer" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="Adress" ColumnName="Adress" />
+                <ScalarProperty Name="Mobile_phone" ColumnName="Mobile phone" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Dolzhnost">
+            <EntityTypeMapping TypeName="Model.Dolzhnost">
+              <MappingFragment StoreEntitySet="Dolzhnost">
+                <ScalarProperty Name="Kod_dolzhnost" ColumnName="Kod_dolzhnost" />
+                <ScalarProperty Name="Nazvanie_dolzhnost" ColumnName="Nazvanie dolzhnost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventory">
+            <EntityTypeMapping TypeName="Model.Inventory">
+              <MappingFragment StoreEntitySet="Inventory">
+                <ScalarProperty Name="kod_inventory" ColumnName="kod_inventory" />
+                <ScalarProperty Name="kod_sewing_tools" ColumnName="kod_sewing_tools" />
+                <ScalarProperty Name="kod_materials" ColumnName="kod_materials" />
+                <ScalarProperty Name="kod_sewing_accessories" ColumnName="kod_sewing_accessories" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materials">
+            <EntityTypeMapping TypeName="Model.Materials">
+              <MappingFragment StoreEntitySet="Materials">
+                <ScalarProperty Name="kod_materials" ColumnName="kod_materials" />
+                <ScalarProperty Name="Name_materials" ColumnName="Name materials" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="Model.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="kod" ColumnName="kod" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="kod_product" ColumnName="kod_product" />
+                <ScalarProperty Name="Kod_customer" ColumnName="Kod_customer" />
+                <ScalarProperty Name="Order_data" ColumnName="Order data" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Product_list">
+            <EntityTypeMapping TypeName="Model.Product_list">
+              <MappingFragment StoreEntitySet="Product list">
+                <ScalarProperty Name="kod_product" ColumnName="kod_product" />
+                <ScalarProperty Name="Nazvanie_tovara" ColumnName="Nazvanie tovara" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sewing_accessories">
+            <EntityTypeMapping TypeName="Model.Sewing_accessories">
+              <MappingFragment StoreEntitySet="Sewing_accessories">
+                <ScalarProperty Name="kod_sewing_accessories" ColumnName="kod_sewing_accessories" />
+                <ScalarProperty Name="Name_accessory" ColumnName="Name_accessory" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sewing_tools">
+            <EntityTypeMapping TypeName="Model.Sewing_tools">
+              <MappingFragment StoreEntitySet="Sewing_tools">
+                <ScalarProperty Name="kod_sewing_tools" ColumnName="kod_sewing_tools" />
+                <ScalarProperty Name="Name_sewing_tool" ColumnName="Name_sewing_tool" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="Model.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="Model.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workers">
+            <EntityTypeMapping TypeName="Model.Workers">
+              <MappingFragment StoreEntitySet="Workers">
+                <ScalarProperty Name="kod_worker" ColumnName="kod_worker" />
+                <ScalarProperty Name="Kod_dolzhnost" ColumnName="Kod_dolzhnost" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
+                <ScalarProperty Name="id_user" ColumnName="id_user" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

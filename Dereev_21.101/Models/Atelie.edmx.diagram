@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="6a3c3bb9312c4f6eafff9a003d1adf03" Name="Diagram1">
+        <EntityTypeShape EntityType="AtelieModel.Customers" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtelieModel.Inventory" Width="1.5" PointX="10" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtelieModel.Materials" Width="1.5" PointX="7.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtelieModel.Orders" Width="1.5" PointX="7.5" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtelieModel.Product_list" Width="1.5" PointX="5.25" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtelieModel.Roles" Width="1.5" PointX="0.75" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtelieModel.Sewing_accessories" Width="1.5" PointX="7.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtelieModel.Sewing_tools" Width="1.5" PointX="7.75" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtelieModel.sysdiagrams" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtelieModel.User" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AtelieModel.Workers" Width="1.5" PointX="5.25" PointY="4.625" IsExpanded="true" />
+        <AssociationConnector Association="AtelieModel.FK_Customers_User" ManuallyRouted="false" />
+        <AssociationConnector Association="AtelieModel.FK_Orders_Customers" ManuallyRouted="false" />
+        <AssociationConnector Association="AtelieModel.FK_Inventory_Materials" ManuallyRouted="false" />
+        <AssociationConnector Association="AtelieModel.FK_Inventory_Sewing_accessories" ManuallyRouted="false" />
+        <AssociationConnector Association="AtelieModel.FK_Inventory_Sewing_tools" ManuallyRouted="false" />
+        <AssociationConnector Association="AtelieModel.FK_Orders_Product_list" ManuallyRouted="false" />
+        <AssociationConnector Association="AtelieModel.FK_User_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="AtelieModel.FK_Workers_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
