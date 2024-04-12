@@ -18,25 +18,32 @@ using System.Diagnostics.SymbolStore;
 using System.Diagnostics.Eventing.Reader;
 using Dereev_21._101.Pages;
 using System.Windows.Threading;
+using System.Net.Mail;
+using System.Net;
+using System.IO;
 
 namespace Dereev_21._101.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Autho.xaml
+    /// Класс представляющий страницу авторизации
     /// </summary>
     public partial class Page1 : Page
     {
-        int unsuccess = 0;
-        public string captcha;
-        private int count = 10;
+        int unsuccess = 0; // Счетчик неудачных попыток входа
+        public string captcha; // Переменная для хранения капчи
+        private int count = 10; // Исходное значение таймера блокировки
         DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.Normal);
+
         public Page1()
         {
             InitializeComponent();
+            // Настройки видимости элементов
             txtBlockCaptcha.Visibility = Visibility.Hidden;
             txtboxCaptcha.Visibility = Visibility.Hidden;
             txtBlockTimer.Visibility = Visibility.Hidden;
         }
+
+        // Генерирует и устанавливает капчу
         private void GetCaptcha()
         {
             captcha = SetCaptcha();
@@ -44,8 +51,9 @@ namespace Dereev_21._101.Pages
             txtBlockCaptcha.Visibility = Visibility.Visible;
             txtboxCaptcha.Visibility = Visibility.Visible;
             txtBlockCaptcha.TextDecorations = TextDecorations.Strikethrough;
-
         }
+
+        // Генерирует случайную капчу
         private string SetCaptcha()
         {
             string simbols = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -58,6 +66,16 @@ namespace Dereev_21._101.Pages
             }
             return cBuild.ToString();
         }
+
+        private void SendEmail(string senderEmail, string senderName, string recipientEmail, string subject, string body)
+        {
+        }
+
+        private void btnSendEmail_Click(object sender, RoutedEventArgs e)
+        {
+        }
+
+        // Загружает форму в зависимости от роли пользователя
         private void LoadForm(string role, Workers workers)
         {
             switch (role)
@@ -74,16 +92,17 @@ namespace Dereev_21._101.Pages
             }
         }
 
+        // Обработчик таймера для блокировки после неудачных попыток
         private void Timer_Tick(object sender, EventArgs e)
         {
             count -= 1;
             if (count != 0)
             {
                 txtBlockTimer.Text = $"До конца блокировки осталось " + count.ToString() + " секунд";
-
             }
             else
             {
+                // Сброс блокировки и счетчика
                 timer.Stop();
                 txtboxCaptcha.IsEnabled = true;
                 txtbLogin.IsEnabled = true;
@@ -95,6 +114,7 @@ namespace Dereev_21._101.Pages
             }
         }
 
+        // Обработчик кнопки входа для гостей
         private void btnEnterGuests_Click(object sender, RoutedEventArgs e)
         {
             if (Time.Access() == true)
@@ -109,14 +129,18 @@ namespace Dereev_21._101.Pages
 
         User user = new User();
         Workers workers = new Workers();
+
+        // Обработчик кнопки входа
         private void btnEnter_Click(object sender, RoutedEventArgs e)
         {
             string login = txtbLogin.Text.Trim();
             string password = Hash.Pass(pswdPassword.Password.Trim());
+
             if (Time.Access() == true)
             {
                 if (login.Length > 0 && password.Length > 0)
                 {
+                    // Блокировка после трех неудачных попыток
                     if (unsuccess >= 3)
                     {
                         txtboxCaptcha.IsEnabled = false;
@@ -131,13 +155,11 @@ namespace Dereev_21._101.Pages
                         count = 10;
                         txtBlockTimer.Text = $"До конца блокировки осталось " + count.ToString() + " секунд";
                         timer.Start();
-
                     }
                     else if (unsuccess == 0)
                     {
                         user = AuthHelp.GetContext().User.Where(u => u.login == login && u.password == password).FirstOrDefault();
                         int userCount = AuthHelp.GetContext().User.Where(u => u.login == login && u.password == password).Count();
-
 
                         if (userCount > 0)
                         {
@@ -176,5 +198,4 @@ namespace Dereev_21._101.Pages
             }
         }
     }
-    }
-
+}

@@ -12,18 +12,18 @@ namespace Konsolika.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Dolzhnost
+    public partial class Roles
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Dolzhnost()
+        public Roles()
         {
-            this.Workers = new HashSet<Workers>();
+            this.User = new HashSet<User>();
         }
     
-        public int Kod_dolzhnost { get; set; }
-        public string Nazvanie_dolzhnost { get; set; }
+        public int id_roles { get; set; }
+        public string name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Workers> Workers { get; set; }
+        public virtual ICollection<User> User { get; set; }
     }
 }

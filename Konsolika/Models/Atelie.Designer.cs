@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "C:\Users\microily\source\repos\HashPasswords\Dereev_21.101\Models\Atelie.edmx" включено. 
+﻿// Создание кода T4 для модели "C:\Users\microily\source\repos\HashPasswords\Konsolika\Models\Atelie.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

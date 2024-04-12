@@ -21,8 +21,9 @@ namespace Dereev_21._101.Models
         }
     
         public int kod_product { get; set; }
-        public string Nazvanie_tovara { get; set; }
+        public string Name { get; set; }
         public Nullable<decimal> Price { get; set; }
+        public string ProductDescription { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Orders> Orders { get; set; }

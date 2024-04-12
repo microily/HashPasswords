@@ -15,13 +15,12 @@ namespace Konsolika.Models
     public partial class Orders
     {
         public int kod { get; set; }
-        public string login { get; set; }
         public int kod_product { get; set; }
         public int Kod_customer { get; set; }
-        public Nullable<System.DateTime> Order_data { get; set; }
+        public System.DateTime Order_data { get; set; }
         public string Order { get; set; }
         public string Description { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public decimal Price { get; set; }
     
         public virtual Customers Customers { get; set; }
         public virtual Product_list Product_list { get; set; }

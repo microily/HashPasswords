@@ -25,6 +25,7 @@ namespace Dereev_21._101.Models
         public string login { get; set; }
         public string password { get; set; }
         public Nullable<int> id_roles { get; set; }
+        public string email { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Customers> Customers { get; set; }

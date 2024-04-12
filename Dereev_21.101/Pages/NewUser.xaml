@@ -1,0 +1,51 @@
+﻿<Page x:Class="Dereev_21._101.Pages.NewUser"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Dereev_21._101.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="NewUser" Background="White">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="260"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="260"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0" VerticalAlignment="Center">
+            <TextBlock Name="txtFam" Text="Фамилия" Height="30" Margin="50, 20, 5, 0"/>
+            <TextBlock Name="txtName" Text="Имя" Height="30" Margin="50, 20, 5, 0"/>
+            <TextBlock Name="txtOtch" Text="Отчество*" Height="30" Margin="50, 20, 5, 0"/>
+            <TextBlock Name="txtEmail" Text="Email" Height="30" Margin="50, 20, 5, 0"/>
+            <TextBlock Name="txtRole" Text="Роль" Height="30" Margin="50, 20, 5, 0"/>
+            <TextBlock Name="txtlogin" Text="Логин" Height="30" Margin="50, 20, 5, 0"/>
+            <TextBlock Name="txtpass" Text="Пароль" Height="30" Margin="50, 20, 5, 0"/>
+        </StackPanel>
+        <StackPanel Grid.Column="1" VerticalAlignment="Center">
+            <TextBox x:Name="tbFam" Height="30" Margin="0, 20, 0, 0"/>
+            <TextBox x:Name="tbName" Height="30" Margin="0, 20, 0, 0"/>
+            <TextBox x:Name="tbOtch" Height="30" Margin="0, 20, 0, 0"/>
+            <TextBox x:Name="tbEmail" Height="30" Margin="0, 20, 0, 0"/>
+            <TextBox x:Name="tbPhone" Height="30" Margin="0, 20, 0, 0"/>
+            <ComboBox x:Name="tbRole" Height="30" Margin="0, 20, 0, 0">
+                <Label Foreground="#252625">Клиент</Label>
+                <Label Foreground="#252625">Администратор</Label>
+                <Label Foreground="#252625">Сотрудник</Label>
+            </ComboBox>
+            <TextBox x:Name="tbLogin" Height="30" Margin="0, 20, 0, 0"/>
+            <TextBox x:Name="tbPass" Height="30" Margin="0, 20, 0, 0"/>
+        </StackPanel>
+        <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Image x:Name="ImageUser" MaxHeight="150" Source="/Resources/profile.png"/>
+            <Button x:Name="AddImage" Content="добавить фото" Click="AddImage_Click"/>
+        </StackPanel>
+        <Button x:Name="BtnSave" Grid.Row="1" Grid.Column="1" Content="сохранить" Click="BtnSave_Click" Margin="0,5,160,5"/>
+        <Button x:Name="BtnDel" Grid.Row="1" Grid.Column="1" Content="очистить" Click="BtnSave_Click" Margin="150,5,10,5"/>
+    </Grid>
+</Page>

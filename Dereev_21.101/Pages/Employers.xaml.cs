@@ -1,6 +1,4 @@
-﻿using Dereev_21._101.Models;
-using HashPassword;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,28 +13,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
-
 namespace Dereev_21._101.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для Client.xaml
+    /// Логика взаимодействия для Employers.xaml
     /// </summary>
-    public partial class Client : Page
+    public partial class Employers : Page
     {
-        public Client()
+        public Employers()
         {
             InitializeComponent();
+        }
 
-            var product = AuthHelp.GetContext().Product_list.ToList();
-            LViewProduct.ItemsSource = product;
+        private void LViewProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Document document = new Document();
-            this.NavigationService.Navigate(document);
+            
         }
     }
 }

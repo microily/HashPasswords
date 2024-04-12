@@ -26,11 +26,11 @@ namespace Konsolika.Models
         }
     
         public virtual DbSet<Customers> Customers { get; set; }
-        public virtual DbSet<Dolzhnost> Dolzhnost { get; set; }
         public virtual DbSet<Inventory> Inventory { get; set; }
         public virtual DbSet<Materials> Materials { get; set; }
         public virtual DbSet<Orders> Orders { get; set; }
         public virtual DbSet<Product_list> Product_list { get; set; }
+        public virtual DbSet<Roles> Roles { get; set; }
         public virtual DbSet<Sewing_accessories> Sewing_accessories { get; set; }
         public virtual DbSet<Sewing_tools> Sewing_tools { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }

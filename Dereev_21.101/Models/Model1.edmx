@@ -4,25 +4,18 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище AtelieModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Customers">
           <Key>
-            <PropertyRef Name="Kod_customer" />
+            <PropertyRef Name="id_customer" />
           </Key>
-          <Property Name="Kod_customer" Type="int" Nullable="false" />
-          <Property Name="Surname" Type="varchar" MaxLength="100" />
-          <Property Name="Name" Type="varchar" MaxLength="100" />
+          <Property Name="id_customer" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="Otchestvo" Type="varchar" MaxLength="100" />
-          <Property Name="Adress" Type="varchar(max)" />
-          <Property Name="Mobile phone" Type="varchar" MaxLength="15" />
+          <Property Name="Adress" Type="varchar" MaxLength="100" />
+          <Property Name="Mobile_phone" Type="numeric" Precision="11" Scale="0" />
           <Property Name="id_user" Type="int" />
-        </EntityType>
-        <EntityType Name="Dolzhnost">
-          <Key>
-            <PropertyRef Name="Kod_dolzhnost" />
-          </Key>
-          <Property Name="Kod_dolzhnost" Type="int" Nullable="false" />
-          <Property Name="Nazvanie dolzhnost" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Inventory">
           <Key>
@@ -46,21 +39,28 @@
             <PropertyRef Name="kod" />
           </Key>
           <Property Name="kod" Type="int" Nullable="false" />
-          <Property Name="login" Type="varchar" MaxLength="50" />
           <Property Name="kod_product" Type="int" Nullable="false" />
           <Property Name="Kod_customer" Type="int" Nullable="false" />
-          <Property Name="Order data" Type="date" />
+          <Property Name="Order data" Type="date" Nullable="false" />
           <Property Name="Order" Type="varchar" MaxLength="100" />
           <Property Name="Description" Type="text" />
-          <Property Name="Price" Type="money" />
+          <Property Name="Price" Type="money" Nullable="false" />
         </EntityType>
-        <EntityType Name="Product list">
+        <EntityType Name="Product_list">
           <Key>
             <PropertyRef Name="kod_product" />
           </Key>
           <Property Name="kod_product" Type="int" Nullable="false" />
-          <Property Name="Nazvanie tovara" Type="varchar" MaxLength="50" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Price" Type="money" />
+          <Property Name="ProductDescription" Type="text" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id_roles" />
+          </Key>
+          <Property Name="id_roles" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Sewing_accessories">
           <Key>
@@ -95,13 +95,14 @@
           <Property Name="id_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="login" Type="varchar" MaxLength="50" />
           <Property Name="password" Type="varchar" MaxLength="100" />
+          <Property Name="id_roles" Type="int" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Workers">
           <Key>
-            <PropertyRef Name="kod_worker" />
+            <PropertyRef Name="id_worker" />
           </Key>
-          <Property Name="kod_worker" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Kod_dolzhnost" Type="int" />
+          <Property Name="id_worker" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Surname" Type="varchar" MaxLength="100" />
           <Property Name="Name" Type="varchar" MaxLength="100" />
           <Property Name="Otchestvo" Type="varchar" MaxLength="100" />
@@ -160,7 +161,7 @@
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
-              <PropertyRef Name="Kod_customer" />
+              <PropertyRef Name="id_customer" />
             </Principal>
             <Dependent Role="Orders">
               <PropertyRef Name="Kod_customer" />
@@ -168,10 +169,10 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Orders_Product list">
-          <End Role="Product list" Type="Self.Product list" Multiplicity="1" />
+          <End Role="Product_list" Type="Self.Product_list" Multiplicity="1" />
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Product list">
+            <Principal Role="Product_list">
               <PropertyRef Name="kod_product" />
             </Principal>
             <Dependent Role="Orders">
@@ -179,15 +180,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Workers_Dolzhnost">
-          <End Role="Dolzhnost" Type="Self.Dolzhnost" Multiplicity="0..1" />
-          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
+        <Association Name="FK_User_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Dolzhnost">
-              <PropertyRef Name="Kod_dolzhnost" />
+            <Principal Role="Roles">
+              <PropertyRef Name="id_roles" />
             </Principal>
-            <Dependent Role="Workers">
-              <PropertyRef Name="Kod_dolzhnost" />
+            <Dependent Role="User">
+              <PropertyRef Name="id_roles" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -203,13 +204,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Хранилище ModelContainer">
+        <EntityContainer Name="Хранилище AtelieModelContainer">
           <EntitySet Name="Customers" EntityType="Self.Customers" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Dolzhnost" EntityType="Self.Dolzhnost" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Inventory" EntityType="Self.Inventory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Materials" EntityType="Self.Materials" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Product list" EntityType="Self.Product list" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product_list" EntityType="Self.Product_list" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sewing_accessories" EntityType="Self.Sewing_accessories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sewing_tools" EntityType="Self.Sewing_tools" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
@@ -236,12 +237,12 @@
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Orders_Product list" Association="Self.FK_Orders_Product list">
-            <End Role="Product list" EntitySet="Product list" />
+            <End Role="Product_list" EntitySet="Product_list" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
-          <AssociationSet Name="FK_Workers_Dolzhnost" Association="Self.FK_Workers_Dolzhnost">
-            <End Role="Dolzhnost" EntitySet="Dolzhnost" />
-            <End Role="Workers" EntitySet="Workers" />
+          <AssociationSet Name="FK_User_Roles" Association="Self.FK_User_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="User" EntitySet="User" />
           </AssociationSet>
           <AssociationSet Name="FK_Workers_User" Association="Self.FK_Workers_User">
             <End Role="User" EntitySet="User" />
@@ -252,28 +253,20 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="AtelieModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Customers">
           <Key>
-            <PropertyRef Name="Kod_customer" />
+            <PropertyRef Name="id_customer" />
           </Key>
-          <Property Name="Kod_customer" Type="Int32" Nullable="false" />
-          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="id_customer" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Otchestvo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Adress" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Mobile_phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Adress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Mobile_phone" Type="Decimal" Precision="11" Scale="0" />
           <Property Name="id_user" Type="Int32" />
           <NavigationProperty Name="User" Relationship="Self.FK_Customers_User" FromRole="Customers" ToRole="User" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Customers" FromRole="Customers" ToRole="Orders" />
-        </EntityType>
-        <EntityType Name="Dolzhnost">
-          <Key>
-            <PropertyRef Name="Kod_dolzhnost" />
-          </Key>
-          <Property Name="Kod_dolzhnost" Type="Int32" Nullable="false" />
-          <Property Name="Nazvanie_dolzhnost" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Workers" Relationship="Self.FK_Workers_Dolzhnost" FromRole="Dolzhnost" ToRole="Workers" />
         </EntityType>
         <EntityType Name="Inventory">
           <Key>
@@ -301,13 +294,12 @@
             <PropertyRef Name="kod" />
           </Key>
           <Property Name="kod" Type="Int32" Nullable="false" />
-          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="kod_product" Type="Int32" Nullable="false" />
           <Property Name="Kod_customer" Type="Int32" Nullable="false" />
-          <Property Name="Order_data" Type="DateTime" Precision="0" />
+          <Property Name="Order_data" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Order" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Orders_Customers" FromRole="Orders" ToRole="Customers" />
           <NavigationProperty Name="Product_list" Relationship="Self.FK_Orders_Product_list" FromRole="Orders" ToRole="Product_list" />
         </EntityType>
@@ -316,9 +308,18 @@
             <PropertyRef Name="kod_product" />
           </Key>
           <Property Name="kod_product" Type="Int32" Nullable="false" />
-          <Property Name="Nazvanie_tovara" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ProductDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Product_list" FromRole="Product_list" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="id_roles" />
+          </Key>
+          <Property Name="id_roles" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Roles" FromRole="Roles" ToRole="User" />
         </EntityType>
         <EntityType Name="Sewing_accessories">
           <Key>
@@ -355,20 +356,21 @@
           <Property Name="id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="id_roles" Type="Int32" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Customers_User" FromRole="User" ToRole="Customers" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_User_Roles" FromRole="User" ToRole="Roles" />
           <NavigationProperty Name="Workers" Relationship="Self.FK_Workers_User" FromRole="User" ToRole="Workers" />
         </EntityType>
         <EntityType Name="Workers">
           <Key>
-            <PropertyRef Name="kod_worker" />
+            <PropertyRef Name="id_worker" />
           </Key>
-          <Property Name="kod_worker" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Kod_dolzhnost" Type="Int32" />
+          <Property Name="id_worker" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Otchestvo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="id_user" Type="Int32" />
-          <NavigationProperty Name="Dolzhnost" Relationship="Self.FK_Workers_Dolzhnost" FromRole="Workers" ToRole="Dolzhnost" />
           <NavigationProperty Name="User" Relationship="Self.FK_Workers_User" FromRole="Workers" ToRole="User" />
         </EntityType>
         <Association Name="FK_Customers_User">
@@ -388,22 +390,10 @@
           <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customers">
-              <PropertyRef Name="Kod_customer" />
+              <PropertyRef Name="id_customer" />
             </Principal>
             <Dependent Role="Orders">
               <PropertyRef Name="Kod_customer" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Workers_Dolzhnost">
-          <End Role="Dolzhnost" Type="Self.Dolzhnost" Multiplicity="0..1" />
-          <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Dolzhnost">
-              <PropertyRef Name="Kod_dolzhnost" />
-            </Principal>
-            <Dependent Role="Workers">
-              <PropertyRef Name="Kod_dolzhnost" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -455,6 +445,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_Roles">
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roles">
+              <PropertyRef Name="id_roles" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="id_roles" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Workers_User">
           <End Role="User" Type="Self.User" Multiplicity="0..1" />
           <End Role="Workers" Type="Self.Workers" Multiplicity="*" />
@@ -469,11 +471,11 @@
         </Association>
         <EntityContainer Name="AtelieEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Customers" EntityType="Self.Customers" />
-          <EntitySet Name="Dolzhnost" EntityType="Self.Dolzhnost" />
           <EntitySet Name="Inventory" EntityType="Self.Inventory" />
           <EntitySet Name="Materials" EntityType="Self.Materials" />
           <EntitySet Name="Orders" EntityType="Self.Orders" />
           <EntitySet Name="Product_list" EntityType="Self.Product_list" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
           <EntitySet Name="Sewing_accessories" EntityType="Self.Sewing_accessories" />
           <EntitySet Name="Sewing_tools" EntityType="Self.Sewing_tools" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
@@ -486,10 +488,6 @@
           <AssociationSet Name="FK_Orders_Customers" Association="Self.FK_Orders_Customers">
             <End Role="Customers" EntitySet="Customers" />
             <End Role="Orders" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Workers_Dolzhnost" Association="Self.FK_Workers_Dolzhnost">
-            <End Role="Dolzhnost" EntitySet="Dolzhnost" />
-            <End Role="Workers" EntitySet="Workers" />
           </AssociationSet>
           <AssociationSet Name="FK_Inventory_Materials" Association="Self.FK_Inventory_Materials">
             <End Role="Materials" EntitySet="Materials" />
@@ -507,6 +505,10 @@
             <End Role="Product_list" EntitySet="Product_list" />
             <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_Roles" Association="Self.FK_User_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
           <AssociationSet Name="FK_Workers_User" Association="Self.FK_Workers_User">
             <End Role="User" EntitySet="User" />
             <End Role="Workers" EntitySet="Workers" />
@@ -517,30 +519,22 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="AtelieEntities">
+        <EntityContainerMapping StorageEntityContainer="Хранилище AtelieModelContainer" CdmEntityContainer="AtelieEntities">
           <EntitySetMapping Name="Customers">
-            <EntityTypeMapping TypeName="Model.Customers">
+            <EntityTypeMapping TypeName="AtelieModel.Customers">
               <MappingFragment StoreEntitySet="Customers">
-                <ScalarProperty Name="Kod_customer" ColumnName="Kod_customer" />
+                <ScalarProperty Name="id_customer" ColumnName="id_customer" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />
                 <ScalarProperty Name="Adress" ColumnName="Adress" />
-                <ScalarProperty Name="Mobile_phone" ColumnName="Mobile phone" />
+                <ScalarProperty Name="Mobile_phone" ColumnName="Mobile_phone" />
                 <ScalarProperty Name="id_user" ColumnName="id_user" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Dolzhnost">
-            <EntityTypeMapping TypeName="Model.Dolzhnost">
-              <MappingFragment StoreEntitySet="Dolzhnost">
-                <ScalarProperty Name="Kod_dolzhnost" ColumnName="Kod_dolzhnost" />
-                <ScalarProperty Name="Nazvanie_dolzhnost" ColumnName="Nazvanie dolzhnost" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Inventory">
-            <EntityTypeMapping TypeName="Model.Inventory">
+            <EntityTypeMapping TypeName="AtelieModel.Inventory">
               <MappingFragment StoreEntitySet="Inventory">
                 <ScalarProperty Name="kod_inventory" ColumnName="kod_inventory" />
                 <ScalarProperty Name="kod_sewing_tools" ColumnName="kod_sewing_tools" />
@@ -550,7 +544,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Materials">
-            <EntityTypeMapping TypeName="Model.Materials">
+            <EntityTypeMapping TypeName="AtelieModel.Materials">
               <MappingFragment StoreEntitySet="Materials">
                 <ScalarProperty Name="kod_materials" ColumnName="kod_materials" />
                 <ScalarProperty Name="Name_materials" ColumnName="Name materials" />
@@ -559,10 +553,9 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="Model.Orders">
+            <EntityTypeMapping TypeName="AtelieModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="kod" ColumnName="kod" />
-                <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="kod_product" ColumnName="kod_product" />
                 <ScalarProperty Name="Kod_customer" ColumnName="Kod_customer" />
                 <ScalarProperty Name="Order_data" ColumnName="Order data" />
@@ -573,16 +566,25 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Product_list">
-            <EntityTypeMapping TypeName="Model.Product_list">
-              <MappingFragment StoreEntitySet="Product list">
+            <EntityTypeMapping TypeName="AtelieModel.Product_list">
+              <MappingFragment StoreEntitySet="Product_list">
                 <ScalarProperty Name="kod_product" ColumnName="kod_product" />
-                <ScalarProperty Name="Nazvanie_tovara" ColumnName="Nazvanie tovara" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProductDescription" ColumnName="ProductDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="AtelieModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="id_roles" ColumnName="id_roles" />
+                <ScalarProperty Name="name" ColumnName="name" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sewing_accessories">
-            <EntityTypeMapping TypeName="Model.Sewing_accessories">
+            <EntityTypeMapping TypeName="AtelieModel.Sewing_accessories">
               <MappingFragment StoreEntitySet="Sewing_accessories">
                 <ScalarProperty Name="kod_sewing_accessories" ColumnName="kod_sewing_accessories" />
                 <ScalarProperty Name="Name_accessory" ColumnName="Name_accessory" />
@@ -591,7 +593,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sewing_tools">
-            <EntityTypeMapping TypeName="Model.Sewing_tools">
+            <EntityTypeMapping TypeName="AtelieModel.Sewing_tools">
               <MappingFragment StoreEntitySet="Sewing_tools">
                 <ScalarProperty Name="kod_sewing_tools" ColumnName="kod_sewing_tools" />
                 <ScalarProperty Name="Name_sewing_tool" ColumnName="Name_sewing_tool" />
@@ -600,7 +602,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="Model.sysdiagrams">
+            <EntityTypeMapping TypeName="AtelieModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -611,19 +613,20 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="Model.User">
+            <EntityTypeMapping TypeName="AtelieModel.User">
               <MappingFragment StoreEntitySet="User">
                 <ScalarProperty Name="id_user" ColumnName="id_user" />
                 <ScalarProperty Name="login" ColumnName="login" />
                 <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="id_roles" ColumnName="id_roles" />
+                <ScalarProperty Name="email" ColumnName="email" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Workers">
-            <EntityTypeMapping TypeName="Model.Workers">
+            <EntityTypeMapping TypeName="AtelieModel.Workers">
               <MappingFragment StoreEntitySet="Workers">
-                <ScalarProperty Name="kod_worker" ColumnName="kod_worker" />
-                <ScalarProperty Name="Kod_dolzhnost" ColumnName="Kod_dolzhnost" />
+                <ScalarProperty Name="id_worker" ColumnName="id_worker" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Otchestvo" ColumnName="Otchestvo" />

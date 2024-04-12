@@ -20,12 +20,12 @@ namespace Konsolika.Models
             this.Orders = new HashSet<Orders>();
         }
     
-        public int Kod_customer { get; set; }
+        public int id_customer { get; set; }
         public string Surname { get; set; }
         public string Name { get; set; }
         public string Otchestvo { get; set; }
         public string Adress { get; set; }
-        public string Mobile_phone { get; set; }
+        public Nullable<decimal> Mobile_phone { get; set; }
         public Nullable<int> id_user { get; set; }
     
         public virtual User User { get; set; }

@@ -1,0 +1,59 @@
+﻿<Page x:Class="Dereev_21._101.Pages.Employers"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Dereev_21._101.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Employers" Background="White">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="200*"/>
+            <ColumnDefinition Width="80*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="56"/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <FlowDocumentReader Grid.Row="0"></FlowDocumentReader>
+        <TextBox Name="txtSearch"  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Width="Auto"/>
+        <Button Content="Найти (по имени)" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="Auto"/>
+        <ListView Name="LViewEmployee" Grid.Row="2" Margin="5,5,10,30" d:ItemsSource="{d:SampleData ItemCount=12}" Grid.ColumnSpan="4" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate >
+
+                <DataTemplate>
+                    <Border BorderBrush="Black" BorderThickness="1" Background="{Binding Background}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Margin="5" >
+                                <Image x:Name="Joe" Source="/Resources/profile.png" HorizontalAlignment="Center" Width="180" Height="180" Margin="5"/>
+                                <TextBlock  Text="{Binding User_id.Role_id.Name}" FontWeight="Bold" HorizontalAlignment="Center"/>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                    <TextBlock Text="{Binding Name}"/>
+                                    <TextBlock Text="{Binding Surname}"/>
+                                </StackPanel>
+                                <TextBlock Text="{Binding Phone_number}" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</Page>
+

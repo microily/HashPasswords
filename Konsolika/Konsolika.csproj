@@ -53,65 +53,65 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper.cs" />
-    <Compile Include="Models\Customers.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Atelie.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Atelie.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Dolzhnost.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Models\Atelie.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Atelie.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Atelie.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Atelie.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customers.cs">
+      <DependentUpon>Atelie.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Inventory.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Atelie.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Materials.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
+      <DependentUpon>Atelie.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Orders.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Atelie.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product_list.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Atelie.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Roles.cs">
+      <DependentUpon>Atelie.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sewing_accessories.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Atelie.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Sewing_tools.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Atelie.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sysdiagrams.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Atelie.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Atelie.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Workers.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+      <DependentUpon>Atelie.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <EntityDeploy Include="Models\Model1.edmx">
+    <EntityDeploy Include="Models\Atelie.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
+      <LastGenOutput>Atelie.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Models\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
+    <None Include="Models\Atelie.edmx.diagram">
+      <DependentUpon>Atelie.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -124,17 +124,16 @@
       <Name>HashPasswords</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <Content Include="Models\Model1.Context.tt">
+    <Content Include="Models\Atelie.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
+      <DependentUpon>Atelie.edmx</DependentUpon>
+      <LastGenOutput>Atelie.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\Model1.tt">
+    <Content Include="Models\Atelie.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
+      <DependentUpon>Atelie.edmx</DependentUpon>
+      <LastGenOutput>Atelie.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

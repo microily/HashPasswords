@@ -26,7 +26,7 @@
         <ComboBox Name="cmbSorting" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5, 0, 5, 0"/>
         <ComboBox Name="cmbFilter" Grid.Row="1" Grid.Column="1" SelectedIndex="0" VerticalAlignment="Center" Margin="5, 0, 5, 0"/>
 
-        <ListView Name="LViewProduct" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Margin="5, 5, 5, 5" d:ItemsSource="{d:SampleData ItemCount=1}">
+        <ListView Name="LViewProduct" Grid.Column="0" Grid.ColumnSpan="4" Grid.Row="2" Margin="5, 5, 5, 5" d:ItemsSource="{d:SampleData ItemCount=10}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -45,12 +45,12 @@
                             <Image Width="180" Height="100" Margin="5"/>
 
                             <StackPanel Grid.Column="1" Margin="5">
-                                <TextBlock Text="{Binding ProductName}" FontWeight="Bold"/>
+                                <TextBlock Text="{Binding Nazvanie_tovara}" FontWeight="Bold"/>
                                 <TextBlock Text="{Binding ProductDescription}"/>
                                 <TextBlock Text="{Binding ProductManufacturer}"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{Binding ProductCost}" TextDecorations="Strikethrough"/>
-                                    <TextBlock Text="{Binding CostWithDiscount, StringFormat='\{0} рублей'}"/>
+                                    <TextBlock Text="{Binding Price}" TextDecorations="Strikethrough"/>
+                                    <TextBlock Text="{Binding Price, StringFormat='\{0} рублей'}"/>
                                 </StackPanel>
                             </StackPanel>
 
@@ -60,5 +60,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Grid.Column="2" Content="Document" HorizontalAlignment="Left" Margin="10,10,0,0" Grid.Row="1" VerticalAlignment="Top" Click="Button_Click"/>
+
     </Grid>
 </Page>

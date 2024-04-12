@@ -6,20 +6,20 @@
       xmlns:local="clr-namespace:Dereev_21._101.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Operator" Background="White">
+          Title="Operator" Background="White">
 
-    <Grid >
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="260"/>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="260"/>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Row="1" Grid.Column="1">
-            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock x:Name="Hello" FontSize="14" Text="Добро пожаловать!" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Center"/>
-                <Button x:Name="OK" Content="OK" FontSize="14" HorizontalAlignment="Center" Margin="0,0,0,170" Click="OK_Click"/>
-            </StackPanel>
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="260"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="260"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1" Grid.Column="1">
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock x:Name="Hello" FontSize="14" Text="Добро пожаловать!" HorizontalAlignment="Center" Margin="0,220,0,0" VerticalAlignment="Center"/>
+                    <Button x:Name="OK" Content="OK" FontSize="14" HorizontalAlignment="Center" Margin="0,0,0,170" Click="OK_Click"/>
+                </StackPanel>
+            </Grid>
+            <Grid/>
         </Grid>
-        <Grid/>
-    </Grid>
-</Page>
+    </Page>

@@ -14,14 +14,12 @@ namespace Konsolika.Models
     
     public partial class Workers
     {
-        public int kod_worker { get; set; }
-        public Nullable<int> Kod_dolzhnost { get; set; }
+        public int id_worker { get; set; }
         public string Surname { get; set; }
         public string Name { get; set; }
         public string Otchestvo { get; set; }
         public Nullable<int> id_user { get; set; }
     
-        public virtual Dolzhnost Dolzhnost { get; set; }
         public virtual User User { get; set; }
     }
 }
