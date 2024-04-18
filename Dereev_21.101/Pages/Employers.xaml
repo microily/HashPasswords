@@ -21,11 +21,9 @@
             <RowDefinition/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-
-        <FlowDocumentReader Grid.Row="0"></FlowDocumentReader>
         <TextBox Name="txtSearch"  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Width="Auto"/>
-        <Button Content="Найти (по имени)" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="Auto"/>
-        <ListView Name="LViewEmployee" Grid.Row="2" Margin="5,5,10,30" d:ItemsSource="{d:SampleData ItemCount=12}" Grid.ColumnSpan="4" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2">
+        <Button Content="Найти (по имени)" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="Auto" Click="Button_Click"/>
+        <ListView Name="LViewEmployee" Grid.Row="2" Margin="5,5,10,30" d:ItemsSource="{d:SampleData ItemCount=10}" Grid.ColumnSpan="4" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2" SelectionChanged="LViewEmployee_SelectionChanged">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Orientation="Horizontal" />
@@ -42,18 +40,17 @@
 
                             <StackPanel Margin="5" >
                                 <Image x:Name="Joe" Source="/Resources/profile.png" HorizontalAlignment="Center" Width="180" Height="180" Margin="5"/>
-                                <TextBlock  Text="{Binding User_id.Role_id.Name}" FontWeight="Bold" HorizontalAlignment="Center"/>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <TextBlock Text="{Binding Name}"/>
-                                    <TextBlock Text="{Binding Surname}"/>
+                                    <TextBlock Name="Name" Text="{Binding Name}" FontWeight="Bold"/>
+                                    <TextBlock Name="Surename" Text="{Binding Surname}" FontWeight="Bold"/>
                                 </StackPanel>
-                                <TextBlock Text="{Binding Phone_number}" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </Grid>
                     </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button x:Name="Add_employer" Content="Добавить пользователя" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="Auto" Margin="149,8,0,8" Grid.ColumnSpan="2" Click="AddEmployer_Click"/>
     </Grid>
 </Page>
 

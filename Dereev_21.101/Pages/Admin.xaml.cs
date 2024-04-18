@@ -35,6 +35,8 @@ namespace Dereev_21._101.Pages
         {
             OK.Visibility = Visibility.Hidden;
             Hello.Visibility = Visibility.Hidden;
+            Employers employersPage = new Employers();
+            NavigationService.Navigate(employersPage);
         }
     }
 }

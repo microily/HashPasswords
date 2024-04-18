@@ -60,15 +60,8 @@ namespace Dereev_21._101.Pages
                     // Здесь могут быть и другие свойства работника, которые вы хотите сохранить
                 };
 
-                // Получаем название выбранной роли
-                string roleName = tbRole.SelectedItem?.ToString();
-
-                // Получаем идентификатор роли по названию
-                int? roleId;
-                using (var context = new AtelieEntities())
-                {
-                    roleId = context.Roles.FirstOrDefault(r => r.name == roleName)?.id_roles;
-                }
+                // Получаем выбранное значение комбобокса
+                int? roleId = tbRole.SelectedIndex + 1; // С учетом, что id_roles начинаются с 1
 
                 if (roleId == null)
                 {
@@ -92,7 +85,6 @@ namespace Dereev_21._101.Pages
                 // Сохраняем работника и пользователя в базе данных
                 using (var context = new AtelieEntities())
                 {
-                    // context.Workers.Add(newWorker); // Не нужно добавлять работника в отдельности
                     context.User.Add(newUser);
                     context.SaveChanges();
                 }
@@ -110,7 +102,8 @@ namespace Dereev_21._101.Pages
 
 
 
-    private void BtnClear_Click(object sender, RoutedEventArgs e)
+
+        private void BtnClear_Click(object sender, RoutedEventArgs e)
         {
             // Очищаем поля формы
             ClearForm();
@@ -127,6 +120,22 @@ namespace Dereev_21._101.Pages
             tbPass.Text = "";
             ImageUser.Source = new BitmapImage(new Uri("/Resources/profile.png", UriKind.Relative));
             imageData = null;
+        }
+
+        private void tbPhone_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void tbRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ComboBox comboBox = (ComboBox)sender;
+            ComboBoxItem selectedItem = (ComboBoxItem)comboBox.SelectedItem;
+            if (selectedItem != null)
+            {
+                // Получаем id_roles из свойства Tag выбранного элемента
+                int idRoles = Convert.ToInt32(selectedItem.Tag);
+            }
         }
     }
 }

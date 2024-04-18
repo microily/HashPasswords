@@ -1,4 +1,4 @@
-﻿<Page x:Class="Dereev_21._101.Pages.NewUser"
+﻿<Page x:Class="Dereev_21._101.Pages.EditUser"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:Dereev_21._101.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="NewUser" Background="White">
+      Title="EditUser" Background="White">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -28,23 +28,23 @@
             <TextBlock Name="txtpass" Text="Пароль" Height="30" Margin="50, 20, 5, 0"/>
         </StackPanel>
         <StackPanel Grid.Column="1" VerticalAlignment="Center">
-            <TextBox x:Name="tbFam" Height="27" Margin="0, 20, 0, 0"/>
-            <TextBox x:Name="tbName" Height="29" Margin="0, 20, 0, 0"/>
-            <TextBox x:Name="tbOtch" Height="28" Margin="0, 20, 0, 0"/>
-            <TextBox x:Name="tbEmail" Height="30" Margin="0, 20, 0, 0"/>
-            <ComboBox x:Name="tbRole" Height="30" Margin="0, 20, 0, 0" SelectionChanged="tbRole_SelectionChanged">
+            <TextBox x:Name="tbFam" Height="27" Margin="0, 20, 0, 0" />
+            <TextBox x:Name="tbName" Height="29" Margin="0, 20, 0, 0" />
+            <TextBox x:Name="tbOtch" Height="28" Margin="0, 20, 0, 0" />
+            <TextBox x:Name="tbEmail" Height="30" Margin="0, 20, 0, 0" />
+            <ComboBox x:Name="tbRole" Height="30" Margin="0, 20, 0, 0" >
                 <ComboBoxItem Foreground="#252625" Tag="1">Admin</ComboBoxItem>
                 <ComboBoxItem Foreground="#252625" Tag="2">Operator</ComboBoxItem>
                 <ComboBoxItem Foreground="#252625" Tag="3">Trader</ComboBoxItem>
             </ComboBox>
-            <TextBox x:Name="tbLogin" Height="30" Margin="0, 20, 0, 0"/>
-            <TextBox x:Name="tbPass" Height="30" Margin="0, 20, 0, 0"/>
+            <TextBox x:Name="tbLogin" Height="30" Margin="0, 20, 0, 0" />
+            <TextBox x:Name="tbPass" Height="30" Margin="0, 20, 0, 0" />
         </StackPanel>
         <StackPanel Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Image x:Name="ImageUser" MaxHeight="150" Source="/Resources/profile.png"/>
-            <Button x:Name="AddImage" Content="добавить фото" Click="AddImage_Click"/>
+            <Button x:Name="AddImage" Content="изменить фото" Click="AddImage_Click"/>
         </StackPanel>
         <Button x:Name="BtnSave" Grid.Row="1" Grid.Column="1" Content="сохранить" Click="BtnSave_Click" Margin="0,5,160,5"/>
-        <Button x:Name="BtnDel" Grid.Row="1" Grid.Column="1" Content="очистить" Click="BtnSave_Click" Margin="150,5,10,5"/>
+        <Button x:Name="BtnDel" Grid.Row="1" Grid.Column="1" Content="Удалить пользователя" Click="BtnSave_Click" Margin="150,5,10,5"/>
     </Grid>
 </Page>
