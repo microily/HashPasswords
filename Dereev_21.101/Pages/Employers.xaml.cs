@@ -121,9 +121,39 @@ namespace Dereev_21._101.Pages
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
+            string searchText = txtSearch.Text.ToLower();
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                try
+                {
+                    using (var context = new AtelieEntities())
+                    {
+                        var employees = (from user in context.User
+                                         join worker in context.Workers on user.id_user equals worker.id_user into workerJoin
+                                         from worker in workerJoin.DefaultIfEmpty()
+                                         select worker).ToList();
 
+                        var filteredEmployees = employees.Where(emp =>
+                            (emp != null &&
+                            ((emp.Surname != null && emp.Surname.ToLower().Contains(searchText)) ||
+                            (emp.Name != null && emp.Name.ToLower().Contains(searchText)) ||
+                            (emp.Otchestvo != null && emp.Otchestvo.ToLower().Contains(searchText))))
+                        ).ToList();
+
+                        LViewEmployee.ItemsSource = filteredEmployees;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"An error occurred while searching: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                LoadData(); // Если поле поиска пустое, отобразите все записи
+            }
         }
     }
 }

@@ -21,8 +21,7 @@
             <RowDefinition/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <TextBox Name="txtSearch"  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Width="Auto"/>
-        <Button Content="Найти (по имени)" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="Auto" Click="Button_Click"/>
+        <TextBox Name="txtSearch"  Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" Margin="5,0,5,0" Width="Auto" TextChanged="txtSearch_TextChanged"/>
         <ListView Name="LViewEmployee" Grid.Row="2" Margin="5,5,10,30" d:ItemsSource="{d:SampleData ItemCount=10}" Grid.ColumnSpan="4" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Grid.RowSpan="2" SelectionChanged="LViewEmployee_SelectionChanged">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -50,8 +49,8 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button x:Name="Add_employer" Content="Добавить пользователя" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="Auto" Margin="149,8,0,8" Grid.ColumnSpan="2" Click="AddEmployer_Click"/>
-        <Button x:Name="excel" Content="Сохранить в EXCEL" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" Width="Auto" Margin="99,8,0,8" Grid.ColumnSpan="2" Click="excel_Click" RenderTransformOrigin="0.476,0.164"/>
+        <Button x:Name="Add_employer" Content="Добавить пользователя" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="174" Margin="10,8,0,8" Click="AddEmployer_Click"/>
+        <Button x:Name="excel" Content="EXCEL файл" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" Width="Auto" Margin="203,8,0,8" Grid.ColumnSpan="2" Click="excel_Click" RenderTransformOrigin="0.476,0.164"/>
     </Grid>
 </Page>
 

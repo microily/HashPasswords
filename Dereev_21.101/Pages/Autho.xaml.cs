@@ -114,6 +114,7 @@ namespace Dereev_21._101.Pages
             }
         }
 
+
         // Обработчик кнопки входа для гостей
         private void btnEnterGuests_Click(object sender, RoutedEventArgs e)
         {

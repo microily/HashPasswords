@@ -137,5 +137,11 @@ namespace Dereev_21._101.Pages
                 int idRoles = Convert.ToInt32(selectedItem.Tag);
             }
         }
+
+        private void doc_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
     }
 }
