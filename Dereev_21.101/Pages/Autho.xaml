@@ -16,11 +16,11 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Логин:"/>
-            <TextBox x:Name="txtbLogin"/>
+            <TextBox x:Name="txtbLogin" Width="248" Height="26"/>
             <TextBlock Text="Пароль:"/>
-            <PasswordBox x:Name="pswdPassword"/>
+            <PasswordBox x:Name="pswdPassword" Width="248" Height="26"/>
             <TextBlock  x:Name="txtBlockCaptcha" Text="Капча:" />
-            <TextBox  x:Name="txtboxCaptcha"/>  
+            <TextBox  x:Name="txtboxCaptcha" Width="248" Height="26"/>  
             <TextBlock x:Name="txtBlockTimer" TextWrapping="Wrap" Text="10:00" TextAlignment="Center" Foreground="Red"/>
             <StackPanel Orientation="Horizontal" Height="80" HorizontalAlignment="Center">
                 <Button x:Name="btnEnterGuests" Margin="5,15,5,5" Content="Войти как гость" Click="btnEnterGuests_Click"/>

@@ -32,8 +32,13 @@ namespace Dereev_21._101.Pages
             {
                 tbLogin.Text = user.login;
                 tbPass.Text = user.password;
+                tbEmail.Text = user.email; // Установка значения email
+                                           // Установка значения роли из ComboBox по id_roles
+                int roleId = user.id_roles ?? 0; // Если id_roles null, используем значение по умолчанию (0)
+                tbRole.SelectedIndex = roleId - 1; // -1, так как индексы в ComboBox начинаются с 0, а в базе данных роли начинаются с 1
             }
         }
+
 
 
         private void BtnSave_Click(object sender, RoutedEventArgs e)

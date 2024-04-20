@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dereev_21._101"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Icon="/Resources/logo.ico">
+        Title="MainWindow" Height="550" Width="900" Icon="/Resources/logo.ico">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>

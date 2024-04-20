@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Dereev_21._101.Pages;
 using Dereev_21._101.Models;
+using Excel = Microsoft.Office.Interop.Excel;
+
 
 namespace Dereev_21._101.Pages
 {
@@ -22,19 +24,22 @@ namespace Dereev_21._101.Pages
     /// </summary>
     public partial class Employers : Page
     {
-
         public Employers()
         {
             InitializeComponent();
             LoadData();
         }
+
         private void LoadData()
         {
-            using (var context = new AtelieEntities()) // Создание контекста базы данных
+            using (var context = new AtelieEntities())
             {
-                var employees = context.Workers.ToList(); // Выборка данных из базы данных
+                var employees = (from user in context.User
+                                 join worker in context.Workers on user.id_user equals worker.id_user into workerJoin
+                                 from worker in workerJoin.DefaultIfEmpty()
+                                 select worker).ToList();
 
-                LViewEmployee.ItemsSource = employees; // Привязка данных к ListView
+                LViewEmployee.ItemsSource = employees;
             }
         }
 
@@ -49,19 +54,74 @@ namespace Dereev_21._101.Pages
             }
         }
 
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
         private void AddEmployer_Click(object sender, RoutedEventArgs e)
         {
             NewUser newUserPage = new NewUser();
             NavigationService.Navigate(newUserPage);
         }
+        private void tbRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
-        private void Search_Click(object sender, RoutedEventArgs e)
+        }
+
+        private void excel_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Создание нового экземпляра приложения Excel
+                Excel.Application excelApp = new Excel.Application();
+                if (excelApp == null)
+                {
+                    MessageBox.Show("Excel is not properly installed!!");
+                    return;
+                }
+
+                // Создание новой книги Excel
+                Excel.Workbook excelWorkbook = excelApp.Workbooks.Add();
+
+                // Добавление нового листа в книгу
+                Excel.Worksheet excelWorksheet = excelWorkbook.Sheets.Add();
+                excelWorksheet.Name = "Employees";
+
+                // Заполнение заголовков
+                excelWorksheet.Cells[1, 1] = "ID";
+                excelWorksheet.Cells[1, 2] = "Login";
+                excelWorksheet.Cells[1, 3] = "Password";
+                excelWorksheet.Cells[1, 4] = "Role ID";
+                excelWorksheet.Cells[1, 5] = "Email";
+                excelWorksheet.Cells[1, 6] = "Surname";
+                excelWorksheet.Cells[1, 7] = "Name";
+                excelWorksheet.Cells[1, 8] = "Otchestvo";
+
+                // Заполнение данными
+                int row = 2;
+                foreach (var employee in LViewEmployee.Items)
+                {
+                    excelWorksheet.Cells[row, 1] = (employee as dynamic).id_user;
+                    excelWorksheet.Cells[row, 2] = (employee as dynamic).login;
+                    excelWorksheet.Cells[row, 3] = (employee as dynamic).password;
+                    excelWorksheet.Cells[row, 4] = (employee as dynamic).id_roles;
+                    excelWorksheet.Cells[row, 5] = (employee as dynamic).email;
+                    excelWorksheet.Cells[row, 6] = (employee as dynamic).Surname;
+                    excelWorksheet.Cells[row, 7] = (employee as dynamic).Name;
+                    excelWorksheet.Cells[row, 8] = (employee as dynamic).Otchestvo;
+                    row++;
+                }
+
+                // Сохранение книги
+                string fileName = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Employees.xlsx");
+                excelWorkbook.SaveAs(fileName);
+
+                // Открытие книги
+                excelApp.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
 
         }
