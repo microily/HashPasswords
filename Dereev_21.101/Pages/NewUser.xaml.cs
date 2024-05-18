@@ -1,18 +1,18 @@
 ﻿using Dereev_21._101.Models;
 using System.Windows.Controls;
 using System.Windows;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.Win32;
 using System.IO;
 using System.Windows.Media.Imaging;
 using System;
 using System.Linq;
-using HashPassword;
 using System.Collections.Generic;
+using Microsoft.Office.Interop.Word;
+using HashPassword;
 
 namespace Dereev_21._101.Pages
 {
-    public partial class NewUser : Page
+    public partial class NewUser : System.Windows.Controls.Page // Явное указание System.Windows.Controls.Page
     {
         private byte[] imageData;
 
@@ -30,10 +30,7 @@ namespace Dereev_21._101.Pages
             {
                 try
                 {
-                    // Открываем выбранный файл изображения и считываем его байты
                     imageData = File.ReadAllBytes(openFileDialog.FileName);
-
-                    // Отображаем выбранное изображение
                     BitmapImage bitmap = new BitmapImage();
                     bitmap.BeginInit();
                     bitmap.StreamSource = new MemoryStream(imageData);
@@ -51,17 +48,14 @@ namespace Dereev_21._101.Pages
         {
             try
             {
-                // Создаем новый объект работника с данными из полей формы
                 Workers newWorker = new Workers
                 {
                     Surname = tbFam.Text,
                     Name = tbName.Text,
                     Otchestvo = tbOtch.Text,
-                    // Здесь могут быть и другие свойства работника, которые вы хотите сохранить
                 };
 
-                // Получаем выбранное значение комбобокса
-                int? roleId = tbRole.SelectedIndex + 1; // С учетом, что id_roles начинаются с 1
+                int? roleId = tbRole.SelectedIndex + 1;
 
                 if (roleId == null)
                 {
@@ -69,20 +63,17 @@ namespace Dereev_21._101.Pages
                     return;
                 }
 
-                // Хешируем пароль с помощью метода Pass из класса Hash
                 string hashedPassword = Hash.Pass(tbPass.Text);
 
-                // Создаем новый объект пользователя с данными из полей формы и идентификатором роли
                 User newUser = new User
                 {
                     email = tbEmail.Text,
                     id_roles = roleId,
                     login = tbLogin.Text,
                     password = hashedPassword,
-                    Workers = new HashSet<Workers> { newWorker } // Исправление связи между объектами
+                    Workers = new HashSet<Workers> { newWorker }
                 };
 
-                // Сохраняем работника и пользователя в базе данных
                 using (var context = new AtelieEntities())
                 {
                     context.User.Add(newUser);
@@ -90,8 +81,6 @@ namespace Dereev_21._101.Pages
                 }
 
                 MessageBox.Show("Пользователь успешно добавлен", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                // Очищаем поля формы после добавления пользователя
                 ClearForm();
             }
             catch (Exception ex)
@@ -100,12 +89,8 @@ namespace Dereev_21._101.Pages
             }
         }
 
-
-
-
         private void BtnClear_Click(object sender, RoutedEventArgs e)
         {
-            // Очищаем поля формы
             ClearForm();
         }
 
@@ -122,10 +107,7 @@ namespace Dereev_21._101.Pages
             imageData = null;
         }
 
-        private void tbPhone_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
+        private void tbPhone_TextChanged(object sender, TextChangedEventArgs e) { }
 
         private void tbRole_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -133,15 +115,8 @@ namespace Dereev_21._101.Pages
             ComboBoxItem selectedItem = (ComboBoxItem)comboBox.SelectedItem;
             if (selectedItem != null)
             {
-                // Получаем id_roles из свойства Tag выбранного элемента
                 int idRoles = Convert.ToInt32(selectedItem.Tag);
             }
         }
-
-        private void doc_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
-
     }
 }

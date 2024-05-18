@@ -112,6 +112,7 @@ namespace Dereev_21._101.Pages
                 string fileName = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Employees.xlsx");
                 excelWorkbook.SaveAs(fileName);
 
+
                 // Открытие книги
                 excelApp.Visible = true;
             }
@@ -123,37 +124,35 @@ namespace Dereev_21._101.Pages
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string searchText = txtSearch.Text.ToLower();
-            if (!string.IsNullOrWhiteSpace(searchText))
+            string searchText = txtSearch.Text.ToLower().Trim();
+            if (string.IsNullOrWhiteSpace(searchText))
             {
-                try
-                {
-                    using (var context = new AtelieEntities())
-                    {
-                        var employees = (from user in context.User
-                                         join worker in context.Workers on user.id_user equals worker.id_user into workerJoin
-                                         from worker in workerJoin.DefaultIfEmpty()
-                                         select worker).ToList();
+                LoadData();
+                return;
+            }
 
-                        var filteredEmployees = employees.Where(emp =>
-                            (emp != null &&
-                            ((emp.Surname != null && emp.Surname.ToLower().Contains(searchText)) ||
-                            (emp.Name != null && emp.Name.ToLower().Contains(searchText)) ||
-                            (emp.Otchestvo != null && emp.Otchestvo.ToLower().Contains(searchText))))
-                        ).ToList();
-
-                        LViewEmployee.ItemsSource = filteredEmployees;
-                    }
-                }
-                catch (Exception ex)
+            try
+            {
+                using (var context = new AtelieEntities())
                 {
-                    MessageBox.Show($"An error occurred while searching: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    var filteredEmployees = context.User
+                        .GroupJoin(context.Workers, user => user.id_user, worker => worker.id_user, (user, workerJoin) => new { User = user, WorkerJoin = workerJoin })
+                        .SelectMany(x => x.WorkerJoin.DefaultIfEmpty(), (x, worker) => new { User = x.User, Worker = worker })
+                        .Where(x => x.Worker != null &&
+                                    (x.Worker.Surname != null && x.Worker.Surname.ToLower().Contains(searchText)) ||
+                                    (x.Worker.Name != null && x.Worker.Name.ToLower().Contains(searchText)) ||
+                                    (x.Worker.Otchestvo != null && x.Worker.Otchestvo.ToLower().Contains(searchText)))
+                        .Select(x => x.Worker)
+                        .ToList();
+
+                    LViewEmployee.ItemsSource = filteredEmployees;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                LoadData(); // Если поле поиска пустое, отобразите все записи
+                MessageBox.Show($"An error occurred while searching: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }

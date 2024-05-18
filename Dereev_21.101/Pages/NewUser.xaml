@@ -46,6 +46,5 @@
         </StackPanel>
         <Button x:Name="BtnSave" Grid.Row="1" Grid.Column="1" Content="сохранить" Click="BtnSave_Click" Margin="0,5,160,5"/>
         <Button x:Name="BtnDel" Grid.Row="1" Grid.Column="1" Content="очистить" Click="BtnSave_Click" Margin="150,5,10,5"/>
-        <Button x:Name="excel" Content="Создание договора" Grid.Column="2" HorizontalAlignment="Center" Width="Auto" Margin="0,316,0,44" Click="doc_Click" RenderTransformOrigin="0.476,0.164"/>
     </Grid>
 </Page>

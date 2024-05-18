@@ -27,5 +27,6 @@
                 <Button x:Name="btnEnter" Margin="5,15,5,5" Content="Войти" Click="btnEnter_Click" />
             </StackPanel>
         </StackPanel>
+        <Button x:Name="btnForgotPassword_Копировать" Content="Забыли пароль?" Click="btnForgotPassword_Click" Width="NaN" Background="Gray" Margin="77,378,77,32" Grid.Column="1"/>
     </Grid>
 </Page>

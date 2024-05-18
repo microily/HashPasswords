@@ -7,6 +7,7 @@ using Dereev_21._101.Models;
 using HashPassword;
 using System.Data.Entity.Migrations;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace Dereev_21._101.Pages
 {
@@ -82,6 +83,65 @@ namespace Dereev_21._101.Pages
         private void AddImage_Click(object sender, RoutedEventArgs e)
         {
             // Действие при добавлении изображения
+        }
+
+        private void doc_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Проверяем, что рабочий и пользовательские данные не равны null
+                if (worker == null || user == null)
+                {
+                    MessageBox.Show("Невозможно создать договор: данные работника или пользователя отсутствуют", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                // Создаем словарь для заполнения шаблона договора
+                var items = new Dictionary<string, string>()
+        {
+            {"<TodayDate>", DateTime.Now.ToString("dd.MM.yyyy")},
+            {"<Sotrudnik>", user.Roles.name}, // Используем роль пользователя из базы данных
+            {"<FullNameWorker>", $"{worker.Surname} {worker.Name} {worker.Otchestvo}"},
+            {"<NumDogovora>", worker.id_worker.ToString()},
+            {"<EmailUser>", user.email} // Добавляем адрес электронной почты пользователя
+        };
+
+                // Путь к шаблону договора
+                string templateFilePath = "C:\\Users\\microily\\source\\repos\\HashPasswords\\Dereev_21.101\\Resources\\blank-trudovogo-dogovora.docx";
+                // Путь для сохранения нового договора
+                string newFilePath = "C:\\Users\\microily\\Desktop\\заполненный_договор.docx";
+
+                // Создаем экземпляр приложения Word
+                Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
+                // Создаем новый документ Word
+                Microsoft.Office.Interop.Word.Document wordDoc = wordApp.Documents.Open(templateFilePath);
+
+                // Заменяем метки в шаблоне на соответствующие значения
+                foreach (var item in items)
+                {
+                    Microsoft.Office.Interop.Word.Find find = wordApp.Selection.Find;
+                    find.Text = item.Key;
+                    find.Replacement.Text = item.Value;
+
+                    object wrap = Microsoft.Office.Interop.Word.WdFindWrap.wdFindContinue;
+                    object replace = Microsoft.Office.Interop.Word.WdReplace.wdReplaceAll;
+                    find.Execute(FindText: Type.Missing,
+                    MatchCase: false, MatchWholeWord: false, MatchWildcards: false,
+                    MatchSoundsLike: Type.Missing, MatchAllWordForms: false, Forward: true,
+                    Wrap: wrap, Format: false, ReplaceWith: Type.Missing, Replace: replace);
+                }
+
+                // Сохраняем новый договор
+                wordDoc.SaveAs2(newFilePath);
+                wordDoc.Close();
+                wordApp.Quit();
+
+                MessageBox.Show("Документ успешно создан и сохранен", "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при создании документа: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

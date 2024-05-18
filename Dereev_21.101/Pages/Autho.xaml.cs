@@ -32,6 +32,7 @@ namespace Dereev_21._101.Pages
         int unsuccess = 0; // Счетчик неудачных попыток входа
         public string captcha; // Переменная для хранения капчи
         private int count = 10; // Исходное значение таймера блокировки
+        private int rndValue = 0; //рандомное число для генерации кода
         DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.Normal);
 
         public Page1()
@@ -197,6 +198,21 @@ namespace Dereev_21._101.Pages
             {
                 MessageBox.Show("Не рабочее время!");
             }
+        }
+
+        private void btnForgotPassword_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnSendCode_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnAccept_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
